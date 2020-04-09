@@ -24,31 +24,48 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  double _size = 150.0;
+
+  get size => _size;
+
+  set size(value) => setState(() {
+        _size = value;
+      });
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: FlutterLogo(size: 150.0),
+        child: FlutterLogo(size: _size),
       ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          FloatingActionButton.extended(
-            onPressed: () {},
-            label: Text('Small'),
-            icon: Icon(Icons.photo_size_select_small),
-          ),
-          FloatingActionButton.extended(
-            onPressed: () {},
-            label: Text('Medium'),
-            icon: Icon(Icons.photo_size_select_actual),
-          ),
-          FloatingActionButton.extended(
-            onPressed: () {},
-            label: Text('Large'),
-            icon: Icon(Icons.photo_size_select_large),
-          ),
-        ],
+      floatingActionButton: Padding(
+        //eventhough we put mainaxis.center the childrens weren't centered. So we decideed to put padding left to make center
+        padding: const EdgeInsets.only(left: 22.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            button(
+              'Small',
+              Icon(Icons.photo_size_select_small),
+              () {
+                size = 50.0;
+              },
+            ),
+            button(
+              'Medium',
+              Icon(Icons.image),
+              () {
+                size = 150.0;
+              },
+            ),
+            button(
+              'Large',
+              Icon(Icons.photo_size_select_large),
+              () {
+                size = 300.0;
+              },
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: SizedBox(
         height: 150.0,
@@ -79,7 +96,7 @@ class _HomeState extends State<Home> {
   }
 }
 
-FloatingActionButton myButton(btnName, icon, function) {
+FloatingActionButton button(btnName, icon, function) {
   return FloatingActionButton.extended(
     onPressed: function,
     label: Text(btnName),
